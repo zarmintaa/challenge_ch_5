@@ -1,0 +1,533 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample server Challege server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
+    "version": "1.0.0",
+    "title": "Swagger Challenge",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "biodata",
+      "description": "Everything about biodata user",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "localhost:8080"
+      }
+    },
+    {
+      "name": "history",
+      "description": "History users"
+    },
+    {
+      "name": "user",
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/user/biodata/all": {
+      "get": {
+        "tags": ["biodata"],
+        "summary": "Get all biodata",
+        "description": "",
+        "operationId": "getAllBio",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "parameters": [],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/biodata/{bioId}": {
+      "get": {
+        "tags": ["biodata"],
+        "summary": "Find biodata by ID",
+        "description": "Returns a single pet",
+        "operationId": "getBioById",
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "name": "bioId",
+            "in": "path",
+            "description": "ID of pet to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Biodata"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Biodata not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["biodata"],
+        "summary": "Updates a pet in the store with form data",
+        "description": "",
+        "operationId": "updateBioById",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "bioId",
+            "in": "path",
+            "description": "ID of bio to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "bio structure",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Biodata"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "tags": ["biodata"],
+        "summary": "Delete  biodata",
+        "description": "",
+        "operationId": "deleteBiodata",
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "name": "bioId",
+            "in": "path",
+            "description": "Bio id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Bio not found"
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/biodata/create": {
+      "post": {
+        "tags": ["biodata"],
+        "summary": "Creates a new biodata",
+        "description": "",
+        "operationId": "createBiodata",
+        "consumes": ["application/json"],
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "biodata to add to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Biodata"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/history/all": {
+      "get": {
+        "tags": ["history"],
+        "summary": "Get all histories",
+        "description": "",
+        "operationId": "allHistory",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/history/create": {
+      "post": {
+        "tags": ["history"],
+        "summary": "Create a history",
+        "description": "",
+        "operationId": "allHistory",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "History to add to the database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/history/{historyId}": {
+      "get": {
+        "tags": ["history"],
+        "summary": "Get single history",
+        "description": "",
+        "operationId": "getSingleHistory",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "historyId",
+            "in": "path",
+            "description": "Get single history user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "tags": ["history"],
+        "summary": "Update history",
+        "description": "",
+        "operationId": "updateHistory",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "historyId",
+            "in": "path",
+            "description": "Get single history user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "History structure",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "tags": ["history"],
+        "summary": "Delete history",
+        "description": "",
+        "operationId": "deleteHistory",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "historyId",
+            "in": "path",
+            "description": "Find single history user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          }
+        },
+        "security": []
+      }
+    },
+
+    "/user/all": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Get all users",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/user/create": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Creates user with given input object",
+        "description": "",
+        "operationId": "createUser",
+        "consumes": ["application/json"],
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User structure",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/user/{uid}": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Get single user",
+        "description": "",
+        "operationId": "getSingleUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "Get single  user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["user"],
+        "summary": "Update user",
+        "description": "",
+        "operationId": "updateUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "Get user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User structure",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["user"],
+        "summary": "Delete user",
+        "description": "",
+        "operationId": "updateUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "Get delete user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "nama": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "Biodata": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer"
+        },
+        "nama": {
+          "type": "string"
+        },
+        "bio": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Biodata"
+      }
+    },
+    "History": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer"
+        },
+        "skor": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

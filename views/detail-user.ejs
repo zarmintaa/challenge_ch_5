@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <title>Hello, world!</title>
+  </head>
+  <body class="bg-dark">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient shadow-lg"
+    >
+      <div class="container-sm">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <li>
+              <a class="nav-link" aria-current="page" href="/user/add"
+                >Add User</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/docs">Docs</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container my-4">
+      <div class="row">
+        <div class="col-lg-6 align-self-center">
+          <div class="card">
+            <% if(biodata){ %>
+            <div class="card-body row">
+              <div class="col-4">
+                <img
+                  src="<%= user.image %>"
+                  class="img-thumbnail rounded mt-1"
+                  alt=""
+                />
+                <a
+                  href="/user/edit/<%= user.user_id %> "
+                  class="d-grid mt-2 text-decoration-none"
+                  ><button class="btn btn-secondary">Edit User</button></a
+                >
+                <form
+                  action="/user/delete/<%= user.user_id %>"
+                  class="d-grid mt-2"
+                >
+                  <button type="submit" class="btn btn-danger">
+                    Delete User
+                  </button>
+                </form>
+              </div>
+              <ul class="list-group col-8 list-group-flush">
+                <li class="list-group-item fw-bold">
+                  Nama :
+                  <span class="text-secondary fw-normal"><%= user.nama %></span>
+                </li>
+                <li class="list-group-item fw-bold">
+                  Username :
+                  <span class="text-secondary fw-normal"
+                    ><%= biodata.nama %></span
+                  >
+                </li>
+                <li class="list-group-item fw-bold">
+                  Gender :
+                  <span class="text-secondary fw-normal"
+                    ><%= biodata.gender %></span
+                  >
+                </li>
+                <li class="list-group-item fw-bold">
+                  Active :
+                  <span class="text-secondary fw-normal"
+                    ><%= parseDate(user.createdAt) %></span
+                  >
+                </li>
+                <li class="list-group-item text__title"><%= biodata.bio %></li>
+                <li class="list-group-item fw-bold">
+                  <a
+                    href="/biodata/edit/<%= biodata.user_game_id %> "
+                    class="d-grid text-decoration-none"
+                  >
+                    <button type="submit" class="btn btn-success">
+                      Edit Biodata
+                    </button>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <% } else { %>
+            <div class="card">
+              <div class="card-body text-center">
+                <div class="card-header fw-bold">
+                  <h3>Biodata Belum Di isi</h3>
+                </div>
+                <a
+                  href="/biodata/<%= user.user_id %> "
+                  class="d-grid text-decoration-none"
+                  ><button class="btn btn-success mt-4 mb-2">
+                    Isi Biodata
+                  </button></a
+                >
+                <a
+                  href="/user/delete/<%= user.user_id %>"
+                  class="d-grid text-decoration-none"
+                  ><button type="submit" class="btn btn-danger">
+                    Delete User
+                  </button></a
+                >
+              </div>
+            </div>
+            <!-- <ul class="list-group col-8 list-group-flush mx-auto">
+              <li class="list-group-item d-flex gap-2 justify-content-center">
+                <form action="/user/delete/<%= user.user_id %>" method="DELETE">
+                  <button type="submit" class="btn btn-danger">
+                    Delete User
+                  </button>
+                </form>
+                <form action="">
+                  <button type="submit" class="btn btn-success">
+                    Edit User
+                  </button>
+                </form>
+              </li>
+            </ul> -->
+
+            <% } %>
+          </div>
+
+          <div class="my-4 card">
+            <form class="card-body" action="/history/add" method="post">
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label fw-bold"
+                  >Input Skor</label
+                >
+                <input name="skor" type="number" class="form-control" />
+                <input type="hidden" name="id" value="<%= user.user_id %>" />
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="row">
+            <% histories.forEach(history => { %>
+            <div class="col-lg-6 mb-4">
+              <div class="card">
+                <div class="card-header fw-bold d-flex justify-content-between">
+                  <div>Update Score</div>
+                  <a
+                    href="/history/<%= history.user_history_id %>?uid=<%= user.user_id %>"
+                    ><button class="btn btn-sm btn-danger">Delete</button></a
+                  >
+                </div>
+                <div class="card-body">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div>Skor: <%= history.skor %></div>
+                    <div class="text-secondary">
+                      <%= parseDate(history.createdAt) %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
