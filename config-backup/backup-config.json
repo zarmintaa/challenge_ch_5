@@ -14,16 +14,10 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "bkcgqzqlxdypyf",
-    "password": "c987fb064b1bd12786e3471437a7212eb9899e410ed487f5bc62afc8f3551f91",
-    "database": "d7gsgcvh6jfbvv",
-    "host": "ec2-34-236-94-53.compute-1.amazonaws.com",
-    "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
-      }
-    }
+    "username": "root",
+    "password": "root",
+    "database": "db_challenge4_production",
+    "host": "localhost",
+    "dialect": "postgres"
   }
 }

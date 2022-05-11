@@ -66,4 +66,5 @@ app.use((req, res, next) => {
   res.status(error.status).json({ message: error.message });
 });
 
-app.listen(port, () => console.log(`App running on port ${port}`));
+// app.listen(port, () => console.log(`App running on port ${port}`));
+module.exports = app;
